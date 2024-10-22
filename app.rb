@@ -41,5 +41,16 @@ get ("/random/results") do
 end
 
 get ("/payment/results") do
+  @the_apr = params.fetch("users_apr").to_f
+  @the_years = params.fetch("users_years").to_f
+  @the_principal = params.fetch("users_principal").to_f
 
+  @r = @the_apr/(100*12)
+  @n = n = @the_years*12
+  @numerator = @the_principal*@r
+  @denominator = 1 - (1 + @r)**(-@n)
+
+  @the_result = @numerator/@denominator
+
+  erb(:payment_results)
 end
